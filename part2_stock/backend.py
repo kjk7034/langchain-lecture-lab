@@ -10,7 +10,7 @@ from stock_info import Stock
 
 
 load_dotenv()
-
+        
 # 환경 변수 읽기
 llm = ChatOpenAI(model='gpt-4o', api_key=os.getenv('OPENAI_API_KEY'), temperature=0)
 

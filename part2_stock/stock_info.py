@@ -30,7 +30,7 @@ class Stock:
             }
         except Exception as e:
             return {"error": f"Failed to retrieve financial data: {e}"}
-
+        
     def report_support(self):
         """
         금융 전문가의 분석을 보조할 지표들

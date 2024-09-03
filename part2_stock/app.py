@@ -4,11 +4,13 @@ from stock_info import Stock
 
 from backend import AI_report
 from search import stock_search
-from comments import create_connection, create_table, insert_comment, get_all_comments
+from comment import create_connection, create_table, insert_comment, get_all_comments
+
 
 @st.cache_data
 def cache_AI_report(ticker):
     return AI_report(ticker)
+
 
 class SearchResult:
     def __init__(self, item):
@@ -42,65 +44,41 @@ selected = st.selectbox("검색 결과 리스트", search_results)
 tabs = ["회사 기본 정보", "AI 분석 보고서", "종목 토론실"]
 tab1, tab2, tab3 = st.tabs(tabs)
 
+# Content for "회사 기본 정보" tab
 with tab1:
     stock = Stock(selected.symbol)
     st.header(str(selected))
     # 거래량 시각화
     st.subheader(f'거래량')
     stock_data = stock.금융정보()
-    if 'error' in stock_data:
-        st.error(stock_data['error'])
-    else:
-        if 'history' in stock_data and not stock_data['history'].empty:
-            st.line_chart(stock_data['history']['Volume'])
-        else:
-            st.warning("거래량 데이터를 가져올 수 없습니다.")
+    st.line_chart(stock_data['history']['Volume'])
 
-        st.header("재무제표")
-        cols = st.columns(3)
+    st.header("재무제표")
+    cols = st.columns(3)
+    cols[0].subheader("매출액")
+    cols[0].line_chart(stock_data['income_statement'].loc['Total Revenue'])
+    cols[1].subheader("순이익")
+    cols[1].line_chart(stock_data['income_statement'].loc['Net Income'])
+    cols[2].subheader("영업이익")
+    cols[2].line_chart(stock_data['income_statement'].loc['Operating Income'])
 
-        if 'income_statement' in stock_data and not stock_data['income_statement'].empty:
-            cols[0].subheader("매출액")
-            cols[0].line_chart(stock_data['income_statement'].loc['Total Revenue'])
+    cols = st.columns(3)
+    cols[0].subheader("자산")
+    cols[0].line_chart(stock_data['balance_sheet'].loc['Total Assets'])
+    cols[1].subheader("부채")
+    cols[1].line_chart(stock_data['balance_sheet'].loc['Total Liabilities Net Minority Interest'])
+    cols[2].subheader("자본")
+    cols[2].line_chart(stock_data['balance_sheet'].loc['Stockholders Equity'])
 
-            cols[1].subheader("순이익")
-            cols[1].line_chart(stock_data['income_statement'].loc['Net Income'])
-
-            cols[2].subheader("영업이익")
-            cols[2].line_chart(stock_data['income_statement'].loc['Operating Income'])
-        else:
-            st.warning("손익계산서 데이터를 가져올 수 없습니다.")
-
-        cols = st.columns(3)
-
-        if 'balance_sheet' in stock_data and not stock_data['balance_sheet'].empty:
-            cols[0].subheader("자산")
-            cols[0].line_chart(stock_data['balance_sheet'].loc['Total Assets'])
-
-            cols[1].subheader("부채")
-            cols[1].line_chart(stock_data['balance_sheet'].loc['Total Liabilities Net Minority Interest'])
-
-            cols[2].subheader("자본")
-            cols[2].line_chart(stock_data['balance_sheet'].loc['Stockholders Equity'])
-        else:
-            st.warning("대차대조표 데이터를 가져올 수 없습니다.")
-
-        cols = st.columns(4)
-
-        if 'cash_flow' in stock_data and not stock_data['cash_flow'].empty:
-            cols[0].subheader("영업 현금흐름")
-            cols[0].line_chart(stock_data['cash_flow'].loc['Operating Cash Flow'])
-
-            cols[1].subheader("투자 현금흐름")
-            cols[1].line_chart(stock_data['cash_flow'].loc['Investing Cash Flow'])
-
-            cols[2].subheader("재무 현금흐름")
-            cols[2].line_chart(stock_data['cash_flow'].loc['Financing Cash Flow'])
-
-            cols[3].subheader("순 현금흐름")
-            cols[3].line_chart(stock_data['cash_flow'].loc['Free Cash Flow'])
-        else:
-            st.warning("현금흐름표 데이터를 가져올 수 없습니다.")
+    cols = st.columns(4)
+    cols[0].subheader("영업 현금흐름")
+    cols[0].line_chart(stock_data['cash_flow'].loc['Operating Cash Flow'])
+    cols[1].subheader("투자 현금흐름")
+    cols[1].line_chart(stock_data['cash_flow'].loc['Investing Cash Flow'])
+    cols[2].subheader("재무 현금흐름")
+    cols[2].line_chart(stock_data['cash_flow'].loc['Financing Cash Flow'])
+    cols[3].subheader("순 현금흐름")
+    cols[3].line_chart(stock_data['cash_flow'].loc['Free Cash Flow'])
 
 # Content for "AI 분석 보고서" tab
 with tab2:
