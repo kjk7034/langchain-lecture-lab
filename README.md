@@ -235,3 +235,30 @@ settings > Limits > Model usage에서 Allowed models 추가.
 ### 프롬프트 엔지니어링
 
 [Best practices for prompt engineering with the OpenAI API](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api)
+
+## Part 2. Streamlit을 활용한 프로젝트
+
+### CH 1. 주식시장 분석 서비스
+
+- 로그인 인증 관련은 구현하지 않음.
+- Streamlit(프론트엔드)으로 Meilisearch, LangChain(OpenAI)을 활용해서 간단하게 기업 검색 및 분석을 구현.
+
+#### System Prompt 정의
+
+[Act As A Financial Analyst](https://github.com/f/awesome-chatgpt-prompts?tab=readme-ov-file#act-as-a-financial-analyst)의 내용으로 설정
+
+영어로 작성하는게 좋은 이유 : 글자수가 한글보다 영어가 적어서 토큰 관련 비용이 절감
+
+기대하는 정보가 나오지 않으면 `제약조건`을 추가
+
+OpenAI 설정에서 Temperature를 0으로 적용.
+
+Temperature를 0으로 설정하는 이유는 모델이 가능한 한 일관되고 예측 가능한 응답을 생성하도록 하기 위해서입니다. Temperature 값이 0이면 모델은 가능한 가장 가능성이 높은 답변을 선택하며, 이로 인해 답변의 다양성이 줄어들고 매우 결정론적인 응답이 생성됩니다. (gpt 답변)
+
+윈도우에서 powershell에서 env는 다음과 같이 설정. `$env:LANGCHAIN_API_KEY=""`
+
+meilisearch는 docker로 실행.
+
+nasdaq symbol
+
+meilisearch에서 데이터를 최초 설정하는 과정을 bootstrap이라고 한다.
