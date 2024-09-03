@@ -255,10 +255,12 @@ OpenAI 설정에서 Temperature를 0으로 적용.
 
 Temperature를 0으로 설정하는 이유는 모델이 가능한 한 일관되고 예측 가능한 응답을 생성하도록 하기 위해서입니다. Temperature 값이 0이면 모델은 가능한 가장 가능성이 높은 답변을 선택하며, 이로 인해 답변의 다양성이 줄어들고 매우 결정론적인 응답이 생성됩니다. (gpt 답변)
 
-윈도우에서 powershell에서 env는 다음과 같이 설정. `$env:LANGCHAIN_API_KEY=""`
-
 meilisearch는 docker로 실행.
 
-nasdaq symbol
-
 meilisearch에서 데이터를 최초 설정하는 과정을 bootstrap이라고 한다.
+
+`[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:  unable to get local issuer certificate (_ssl.c:1006)')))` 같은 오류가 발생함.
+
+fc.yahoo.com -Port 443에 접근이 가능한 것을 확인했고, `python.exe -m pip install --upgrade pip` pip upgrade하고 `pip install --upgrade certifi` certifi upgrade해서 해결함.
+
+### CH 2. 와인정보 기반 음식 페어링 추천
