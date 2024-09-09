@@ -264,3 +264,10 @@ meilisearch에서 데이터를 최초 설정하는 과정을 bootstrap이라고 
 fc.yahoo.com -Port 443에 접근이 가능한 것을 확인했고, `python.exe -m pip install --upgrade pip` pip upgrade하고 `pip install --upgrade certifi` certifi upgrade해서 해결함.
 
 ### CH 2. 와인정보 기반 음식 페어링 추천
+
+- Pinecone : vector가 저장된 데이터베이스
+- `pip install -r requirements.txt` 설치할 파일 모아서 한번에.
+- 임베딩이란 데이터를 벡터로 변환하는 과정
+- 벡터 데이터베이스를 사용하는 이유 : 계산 시스템에 최적화 되도록 데이터를 저장, 검색 (Pinecone)
+- Sementic Search : 문장과 유사한 단어들을 검색
+- RAG : Retrival Augmented Generation (검색엔진에서 데이터가져오기 + 증강된 데이터로 결과 생성하기)
